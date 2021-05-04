@@ -1,0 +1,93 @@
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+repositories {
+	mavenCentral()
+}
+
+java {
+	withJavadocJar()
+	withSourcesJar()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile 'org.apache.velocity:velocity-engine-core:2.1'
+}
+
+jar {
+	manifest {
+		attributes 'Implementation-Title': 'Date & Time Classes for Java & .NET with nanosecond precision',
+				'Implementation-Version': archiveVersion,
+				'Implementation-Vendor': 'EPAM'
+	}
+}
+def rUser = findProperty('SONATYPE_NEXUS_USERNAME') ?:  System.getenv('SONATYPE_NEXUS_USERNAME') ?: "FakeUser"
+def rPass = findProperty('SONATYPE_NEXUS_PASSWORD') ?:  System.getenv('SONATYPE_NEXUS_PASSWORD') ?: "FakePass"
+
+publishing {
+	repositories {
+		maven {
+			url = findProperty('SONATYPE_REPOSITORY') ?: System.getenv('SONATYPE_REPOSITORY') ?: "FakeRepo"
+
+			credentials {
+				username rUser
+				password rPass
+			}
+		}
+	}
+
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+
+			pom {
+				name = 'velocity'
+				packaging = 'jar'
+				description = 'Gradle velocity plugin.'
+				url = 'https://github.com/epam/VelocityPlugin'
+
+				scm {
+					connection = 'scm:git:https://github.com/epam/VelocityPlugin.git'
+					developerConnection = 'scm:git:https://github.com/epam/VelocityPlugin.git'
+					url = 'https://github.com/epam/VelocityPlugin.git'
+				}
+
+				licenses {
+					license {
+						name = 'The Apache License, Version 2.0'
+						url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+
+				developers {
+					developer {
+						id = 'alex-karpovich'
+						name = 'Alexander Karpovich'
+						email = 'aliaksandr_karpovich@epam.com'
+						url = 'https://github.com/alex-karpovich'
+						organization = 'EPAM Systems'
+						organizationUrl = 'https://www.epam.com/'
+					}
+				}
+			}
+		}
+	}
+
+	signing {
+		def signingKey = findProperty('SIGNING_PRIVATE_KEY') ?: System.getenv('SIGNING_PRIVATE_KEY') ?: "FakeUser"
+		def signingPassword = findProperty('SIGNING_PASSWORD') ?: System.getenv('SIGNING_PASSWORD') ?: "FakePass"
+
+		useInMemoryPgpKeys(signingKey, signingPassword)
+		sign publishing.publications.mavenJava
+
+		required { isReleaseVersion }
+	}
+}
