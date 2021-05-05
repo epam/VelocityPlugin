@@ -1,9 +1,9 @@
+apply plugin: 'groovy'
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
@@ -51,7 +51,7 @@ publishing {
 			pom {
 				name = 'velocity'
 				packaging = 'jar'
-				description = 'Gradle velocity plugin.'
+				description = 'Gradle Velocity Plugin.'
 				url = 'https://github.com/epam/VelocityPlugin'
 
 				scm {
