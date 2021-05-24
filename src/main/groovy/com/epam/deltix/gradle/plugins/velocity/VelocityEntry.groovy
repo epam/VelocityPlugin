@@ -14,7 +14,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.epam.deltix.gradle.plugins.velocity
+package com.epam.deltix.gradle.plugins.velocity
 
 /**
  * Created by PastushenyaV on 7/26/2016.

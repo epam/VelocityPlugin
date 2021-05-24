@@ -14,7 +14,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.epam.deltix.gradle.plugins.velocity
+package com.epam.deltix.gradle.plugins.velocity
 
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
