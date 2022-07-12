@@ -17,9 +17,9 @@ java {
 }
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
-    compile 'org.apache.velocity:velocity-engine-core:2.1'
+    implementation gradleApi()
+	implementation localGroovy()
+	implementation 'org.apache.velocity:velocity-engine-core:2.1'
 }
 
 jar {
