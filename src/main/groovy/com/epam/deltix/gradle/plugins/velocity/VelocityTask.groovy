@@ -20,6 +20,8 @@ import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
 /**
@@ -27,7 +29,9 @@ import org.gradle.api.tasks.TaskAction
  */
 class VelocityTask extends DefaultTask {
 
+    @InputFile
     String from
+    @OutputFile
     String to           //can be with parameters @{param_name}
     private Set<VelocityContext> velocityContexts = new HashSet<>()
 

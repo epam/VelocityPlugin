@@ -16,12 +16,17 @@
  */
 package com.epam.deltix.gradle.plugins.velocity
 
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.OutputFile
+
 /**
  * Created by PastushenyaV on 7/26/2016.
  */
 class VelocityEntry {
     final String name
+    @InputFile
     String from
+    @OutputFile
     String to           //can be with parameters @{param_name}
     List<Map> contexts
 
